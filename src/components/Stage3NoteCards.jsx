@@ -67,6 +67,7 @@ export default function Stage3NoteCards() {
   const [duration, setDuration] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isSongEnded, setIsSongEnded] = useState(false);
+  const [hasScrolledNote, setHasScrolledNote] = useState(false);
   const [timeElapsed, setTimeElapsed] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   // Live Relationship Counter since March 31, 9:00 PM
@@ -141,6 +142,13 @@ export default function Stage3NoteCards() {
     window.location.reload();
   };
 
+  // Track note scroll to hide arrow indicator
+  const handleNoteScroll = (e) => {
+    if (e.target.scrollTop > 10) {
+      setHasScrolledNote(true);
+    }
+  };
+
   // Identify Active Lyric Index & Next Lyric Index
   const activeLyricIdx = LYRIC_TIMESTAMPS.reduce((activeIdx, item, idx) => {
     return currentAudioTime >= item.time ? idx : activeIdx;
@@ -203,7 +211,7 @@ export default function Stage3NoteCards() {
       <div className="relative z-10 w-full max-w-sm my-auto flex flex-col items-center justify-center min-h-[300px]">
         <AnimatePresence mode="wait">
           {!showLyrics ? (
-            /* STEP 1: Vintage Burnt-Parchment Scroll Letter with Cursive Script & Heart Wax Seal */
+            /* STEP 1: Scrollable Vintage Parchment Letter */
             <motion.div
               key="personal-letter"
               initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
@@ -212,37 +220,51 @@ export default function Stage3NoteCards() {
               transition={{ duration: 0.6, ease: 'easeOut' }}
               className="relative w-full p-6 text-amber-950 rounded-xl shadow-[0_25px_60px_rgba(0,0,0,0.85)] border border-amber-900/40 flex flex-col items-center"
               style={{
-                // Parchment paper gradient
                 background: 'radial-gradient(ellipse at center, #f5e4bc 0%, #e2c992 70%, #bd9853 100%)',
-                // Singed / Burnt dark border edge effect
                 boxShadow: 'inset 0 0 35px rgba(60, 25, 0, 0.75), 0 20px 50px rgba(0,0,0,0.9)',
               }}
             >
               {/* Center Fold Line */}
               <div className="absolute top-0 bottom-0 left-1/2 w-[1px] bg-amber-900/20 shadow-[0_0_8px_rgba(0,0,0,0.3)] pointer-events-none" />
 
-              {/* Red Heart Wax Seal (Bottom Right Positioned matching image) */}
+              {/* Red Heart Wax Seal */}
               <div className="absolute bottom-4 right-4 z-20 flex items-center justify-center w-11 h-11 rounded-full bg-gradient-to-tr from-red-900 via-rose-700 to-red-600 border-2 border-red-950 shadow-[0_4px_12px_rgba(0,0,0,0.6)] cursor-pointer rotate-12">
                 <span className="text-red-200 text-base drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">❤️</span>
               </div>
 
               {/* Title Header */}
               <h2
-                className="text-3xl text-amber-950 tracking-wider mb-3 font-bold"
+                className="text-3xl text-amber-950 tracking-wider mb-2 font-bold"
                 style={{ fontFamily: "'Dancing Script', cursive" }}
               >
                 To My Adelaide
               </h2>
 
-              {/* Handwritten Letter Body */}
-              <div className="w-full px-2 py-1 mb-6 relative z-10 text-left">
-                <p
-                  className="text-lg text-amber-950/90 leading-relaxed tracking-wide"
-                  style={{ fontFamily: "'Dancing Script', cursive", fontWeight: 500 }}
+              {/* Scrollable Letter Body Container */}
+              <div className="relative w-full mb-4">
+                <div
+                  onScroll={handleNoteScroll}
+                  className="w-full max-h-[200px] overflow-y-auto px-3 py-2 text-left relative z-10 rounded-lg bg-amber-900/5 border border-amber-900/10 shadow-inner scrollbar-thin scrollbar-thumb-amber-800/40 scrollbar-track-transparent"
                 >
-                  "Hey baby, &nbsp; So umm probably been a while since I wrote a paragraph for my lovely girl, well im gonna try.
+                  <p
+                    className="text-lg text-amber-950/90 leading-relaxed tracking-wide pr-1"
+                    style={{ fontFamily: "'Dancing Script', cursive", fontWeight: 500 }}
+                  >
+                    "Hey baby, &nbsp; So umm probably been a while since I wrote a paragraph for my lovely girl, well im gonna try.
 For the past couple of days we haven’t talked that much like we used to and im glad that I don’t worry much but still I feel the love as you have kept on reassuring me. I wanna do the same for you love, I like you and I will forever love you, im obsessed with you girl and Adelaide though we may not be currently physically together receive my virtual kisses love 😘 😘. I may not write much today, just wanted to remind you, I love you Adelaide"
-                </p>
+                  </p>
+                </div>
+
+                {/* Animated Scroll Hint Indicator */}
+                {!hasScrolledNote && (
+                  <motion.div
+                    animate={{ y: [0, 4, 0] }}
+                    transition={{ repeat: Infinity, duration: 1.5 }}
+                    className="absolute bottom-2 right-6 z-20 pointer-events-none bg-amber-950/80 text-amber-100 text-[9px] px-2 py-0.5 rounded-full flex items-center gap-1 shadow-md border border-amber-600/30 font-sans"
+                  >
+                    Scroll down 📜 ↓
+                  </motion.div>
+                )}
               </div>
 
               {/* Action Button */}
@@ -252,7 +274,7 @@ For the past couple of days we haven’t talked that much like we used to and im
                 onClick={handleStartMusic}
                 className="relative z-10 w-full py-3 px-6 rounded-full bg-gradient-to-r from-amber-950 via-stone-900 to-amber-950 text-amber-100 font-serif text-sm shadow-xl border border-amber-600/40 cursor-pointer"
               >
-                Play a Song 
+                Play Our Song 🎵 ✨
               </motion.button>
             </motion.div>
           ) : (
@@ -272,7 +294,6 @@ For the past couple of days we haven’t talked that much like we used to and im
                   <p className="text-base sm:text-lg text-white font-semibold leading-relaxed break-words tracking-wide drop-shadow-md">
                     "{activeLyric?.text}"
                   </p>
-                  
                 </motion.div>
               </AnimatePresence>
 
