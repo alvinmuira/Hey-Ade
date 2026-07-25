@@ -4,7 +4,7 @@ import Stage0BearIntro from './components/Stage0BearIntro';
 import Stage1HeartCanvas from './components/Stage1HeartCanvas';
 import Stage1_5PuzzleRules from './components/Stage1_5PuzzleRules';
 import Stage2TilePuzzle from './components/Stage2TilePuzzle';
-// import Stage3NoteCards from './components/Stage3NoteCards';
+import Stage3NoteCards from './components/Stage3NoteCards';
 
 export default function App() {
   // Stage 0: Bear Intro
@@ -73,7 +73,7 @@ export default function App() {
           </motion.div>
         )}
 
-        {/* {currentStage === 4 && (
+        {currentStage === 4 && (
           <motion.div
             key="stage3"
             initial={{ opacity: 0 }}
@@ -84,7 +84,7 @@ export default function App() {
           >
             <Stage3NoteCards />
           </motion.div>
-        )} */}
+        )} 
       </AnimatePresence>
     </main>
   );
