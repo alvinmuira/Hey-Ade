@@ -5,7 +5,7 @@ import confetti from 'canvas-confetti';
 const PUZZLE_LEVELS = [
   { id: 1, image: '/assets/photo-puzzle-1.jpeg', size: 3, title: 'Memory #1 📸', maxPreviews: 1 },
   { id: 2, image: '/assets/photo-puzzle-2.jpeg', size: 3, title: 'Memory #2 💕', maxPreviews: 1 },
-  { id: 3, image: '/assets/photo-puzzle-3.jpeg', size: 4, title: 'The Grand Finale 🌟', maxPreviews: 2 },
+  { id: 3, image: '/assets/photo-puzzle-3.jpeg', size: 3, title: 'The Grand Finale 🌟', maxPreviews: 2 },
 ];
 
 export default function Stage2TilePuzzle({ onNext }) {

@@ -274,7 +274,7 @@ For the past couple of days we haven’t talked that much like we used to and im
                 onClick={handleStartMusic}
                 className="relative z-10 w-full py-3 px-6 rounded-full bg-gradient-to-r from-amber-950 via-stone-900 to-amber-950 text-amber-100 font-serif text-sm shadow-xl border border-amber-600/40 cursor-pointer"
               >
-                Play Our Song 🎵 ✨
+                Play a Song
               </motion.button>
             </motion.div>
           ) : (
